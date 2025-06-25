@@ -1,28 +1,23 @@
 import  socket
+from Chat import start_chat
 
 PORT = 8800
 HOST = "192.168.25.237"
 
-try:
+
+def main():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    print("Socket Created")
-except:
-    print("Failed to create socket")
+    s.bind((HOST, PORT))
+    s.listen()
 
-s.bind((HOST, PORT))
-s.listen()
+    while True:
+        conn, addr = s.accept()
+        print(f"Got connection from: {addr}")
 
-while True:
-    conn, addr = s.accept()
-    print(f"Got connection from: {addr}")
+        start_chat(conn)
 
-    dataSend = "hello".encode()
-    conn.send(len(dataSend).to_bytes(4, "big"))
-    conn.send(dataSend)
+        conn.close()
+        print("Connection Closed")
 
-    message_size = int.from_bytes(conn.recv(4), "big")
-    dataGot: str = conn.recv(message_size).decode()
-    print(f"Received: {dataGot}")
-
-    conn.close()
-    print("Connection Closed")
+if __name__ == "__main__":
+    main()
