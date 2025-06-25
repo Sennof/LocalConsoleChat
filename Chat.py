@@ -17,6 +17,8 @@ def get_messages(conn):
         print(f"[{current_time}] {dataGot}")
 
 def start_chat(conn):
+    print("You can say hi now!")
+
     t1 = threading.Thread(target=send_messages, args=(conn,), daemon=True)
     t1.start()
     t2 = threading.Thread(target=get_messages, args=(conn,), daemon=True)
