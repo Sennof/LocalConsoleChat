@@ -10,6 +10,8 @@ def main():
     s.bind((HOST, PORT))
     s.listen()
 
+    print(f"Listening on port {PORT}")
+
     while True:
         conn, addr = s.accept()
         print(f"Got connection from: {addr}")
@@ -17,7 +19,6 @@ def main():
         start_chat(conn)
 
         conn.close()
-        print("Connection Closed")
 
 if __name__ == "__main__":
     main()
